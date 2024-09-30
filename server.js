@@ -1,5 +1,9 @@
 import { createRequestHandler } from "@remix-run/express";
 import express from "express";
+import morgan from "morgan";
+import path  from "path";
+import * as rfs from "rotating-file-stream";
+import { fileURLToPath } from 'url';
 
 const viteDevServer =
   process.env.NODE_ENV === "production"
@@ -12,6 +16,16 @@ const viteDevServer =
 
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// create a rotating write stream
+var accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+})
+app.use(morgan("combined", { stream: accessLogStream }));
+
 app.use(
   viteDevServer
     ? viteDevServer.middlewares
