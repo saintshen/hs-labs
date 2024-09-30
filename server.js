@@ -24,7 +24,7 @@ var accessLogStream = rfs.createStream('access.log', {
   interval: '1d', // rotate daily
   path: path.join(__dirname, 'log')
 })
-app.use(morgan("combined", { stream: accessLogStream }));
+app.use(morgan("[:date[clf]] :req['cf-connecting-ip'] :req['X-Real-IP'] :method :url :status :res[content-length] :response-time ms :referrer :user-agent", { stream: accessLogStream }));
 
 app.use(
   viteDevServer
