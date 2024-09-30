@@ -24,8 +24,8 @@ var accessLogStream = rfs.createStream("access.log", {
   path: path.join(__dirname, "log"),
 });
 
-morgan.token("cfip", function (req, res) {
-  return req.headers["cf-connection-ip"];
+morgan.token("cfip", function (req) {
+  return req.headers["cf-connecting-ip"];
 });
 app.use(
   morgan(
