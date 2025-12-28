@@ -1,6 +1,6 @@
 services:
   hslabs:
-    image: hslabs
+    image: hs-labs
     build:
       context: .
       dockerfile: ./Dockerfile
